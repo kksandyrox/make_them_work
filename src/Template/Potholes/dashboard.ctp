@@ -1,8 +1,8 @@
-<div class="container mt-5 ml-lg-5 footer-adjustment">
+<div class="mt-5 footer-adjustment">
     <div class="row">
         <?php echo $this->element('sidebar/sticky-sidebar');?>
         <div class="col-lg-8">
-            <?php echo $this->Form->create(false, ['url' => ['action' => 'upload_pothole', 'controller' => 'potholes'], 'type' => 'file']) ;?>
+            <?php echo $this->Form->create(false, ['url' => ['action' => 'upload_pothole', 'controller' => 'potholes'], 'type' => 'file', 'id' => 'upload-pothole-form']) ;?>
             <div class="row">
                 <div class="col-lg-6">
                     <?php
@@ -211,6 +211,7 @@
             <?php else: ?>
                 <h4>No matching results</h4>
             <?php endif;?>
+            <div id="goTop"></div>
             <?php
                 $this->Paginator->setTemplates([
                     'prevActive' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>'

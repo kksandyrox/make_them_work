@@ -53,7 +53,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('login', ['controller' => 'Users', 'action' => 'login']);
-    $routes->connect('/', ['controller' => 'potholes', 'action' => 'dashboard']);
+    $routes->connect('/', ['controller' => 'potholes', 'action' => 'publicDashboard']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

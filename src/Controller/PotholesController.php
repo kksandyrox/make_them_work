@@ -4,6 +4,7 @@ namespace App\Controller;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Potholes Controller
@@ -14,6 +15,10 @@ use App\Controller\AppController;
  */
 class PotholesController extends AppController
 {
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['publicView', 'publicDashboard']);
+    }
 
     /**
      * Index method
@@ -40,7 +45,17 @@ class PotholesController extends AppController
      */
     public function view($id = null)
     {
-        $this->viewBuilder()->setLayout('auth');
+        $this->viewBuilder()->setLayout('non_auth');
+        $pothole = $this->Potholes->get($id, [
+            'contain' => ['Users', 'Constituencies']
+        ]);
+
+        $this->set('pothole', $pothole);
+    }
+
+    public function publicView($id = null)
+    {
+        $this->viewBuilder()->setLayout('non_auth');
         $pothole = $this->Potholes->get($id, [
             'contain' => ['Users', 'Constituencies']
         ]);
@@ -156,7 +171,7 @@ class PotholesController extends AppController
     }
 
     public function dashboard() {
-        $this->viewBuilder()->setLayout('auth');
+        $this->viewBuilder()->setLayout('non_auth');
         $conditions = array();
         $filter = '';
         if(!empty($this->request->getQuery('filter'))) {
@@ -183,8 +198,35 @@ class PotholesController extends AppController
         $this->set(compact('constituencies', 'potholes', 'filter', 'userId'));
     }
 
+    public function publicDashboard() {
+        $this->viewBuilder()->setLayout('non_auth');
+        $conditions = array();
+        $filter = '';
+        if(!empty($this->request->getQuery('filter'))) {
+            $filter = $this->request->getQuery('filter');
+            $conditions = array('constituency_id' => $filter);
+        }
+        $constituencies = $this->Potholes->Constituencies->find('list', ['fields' => ['id', 'name']])->toArray();
+        $this->paginate = [
+            'contain' => ['Users', 'Constituencies', 'PotholeVerifications'],
+            'limit' => 10,
+            'join' => ([
+                'table' => 'pothole_verifications',
+                'type' => 'LEFT',
+                'alias' => 'pv',
+                'conditions' => ['pv.pothole_id = Potholes.id']
+                ]),
+            'conditions' => $conditions,
+            'order' => ['created' => 'DESC'],
+            'group' => 'Potholes.id'
+        ];
+        $potholes = $this->paginate($this->Potholes)->toArray();
+        $userId = $this->Auth->user('id');
+        $this->set(compact('constituencies', 'potholes', 'filter', 'userId'));
+    }
+
     public function statistics() {
-        $this->viewBuilder()->setLayout('auth');
+        $this->viewBuilder()->setLayout('non_auth');
         $potholeStatisticsQuery = "SELECT count(p.id) as p_count, p.id ,c.name FROM constituencies as c left join potholes as p on p.constituency_id = c.id group by c.id ORDER BY  c.id ASC ";
         $connection = ConnectionManager::get('default');
         $potholeStatistics = $connection->execute($potholeStatisticsQuery)->fetchAll('assoc');

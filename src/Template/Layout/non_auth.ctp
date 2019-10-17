@@ -21,6 +21,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- <meta property="og:title" content="your_link_title"> -->
+    <!-- <meta property="og:image" content="http://mtw.sj/files/2/26/dota_2_queen_of_pain_akasha_succubus_101908_1920x1080.jpg"> -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
     <title>
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
@@ -29,6 +34,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->css('bootstrap.min.css') ?>
     <?= $this->Html->css('mdb.min.css') ?>
+    <?= $this->Html->css('dropify.min.css') ?>
+    <?= $this->Html->css('lightbox.css') ?>
+    <?= $this->Html->css('style.css') ?>
     <?= $this->fetch('script') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -41,10 +49,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <!-- Bootstrap core CSS -->
 <body>
 <!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark info-color">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color">
 
     <!-- Navbar brand -->
-    <a class="navbar-brand" href="#">MAKE THEM WORK</a>
+    <?php 
+        $homePage = "/potholes/dashboard";
+        if(empty($Auth->user())) {
+            $homePage = "/potholes/publicDashboard";
+        }
+    ;?>
+    <a class="navbar-brand" href="<?php echo $homePage;?>">MAKE THEM WORK</a>
 
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
@@ -66,19 +80,29 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <a class="nav-link" href="/feedbacks/feedback">Submit Feedback
                     <span class="sr-only">(current)</span>
                 </a>
-            </li>            
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><span>(Launching Soon)</span><sup><i class="fa fa-android" aria-hidden="true"></i><span>&nbsp;+&nbsp;</span><i class="fa fa-apple" aria-hidden="true"></i></sup>
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>           
         </ul>
+
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                 <?php echo $this->Html->link('Login', array('action' => 'login', 'controller' => 'users'), array('class' => 'nav-link'));?>
-            </li>
-            <li class="nav-item">
-                 <?php echo $this->Html->link('Register', array('action' => 'register', 'controller' => 'users'), array('class' => 'nav-link'));?>
-            </li>
+            <?php if(empty($Auth->user())): ?>
+                <li class="nav-item">
+                    <?php echo $this->Html->link('Login', array('action' => 'login', 'controller' => 'users'), array('class' => 'nav-link')); ?>
+                </li>
+                <li class="nav-item">
+                    <?php echo $this->Html->link('Register', array('action' => 'register', 'controller' => 'users'), array('class' => 'nav-link'));?>
+                </li>
+            <?php else:?>
+                <li class="nav-item">
+                    <?php echo $this->Html->link('Logout', array('action' => 'logout', 'controller' => 'users'), array('class' => 'nav-link')); ?>
+                </li>
+            <?php endif;?>
         </ul>
-        <!-- Links -->
     </div>
-    <!-- Collapsible content -->
 
 </nav>
     <?= $this->Flash->render() ?>
@@ -86,6 +110,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <?= $this->fetch('content') ?>
     </div>
     <footer>
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <a href="https://mdbootstrap.com/bootstrap-tutorial/"> MDBootstrap.com</a>
+        </div>    
     </footer>
 </body>
     <?php
@@ -93,5 +120,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         echo $this->Html->script('popper.min.js');
         echo $this->Html->script('bootstrap.min.js');
         echo $this->Html->script('mdb.min.js');
+        echo $this->Html->script('chart.js');
+        echo $this->Html->script('dropify.min.js');
+        echo $this->Html->script('lightbox.js');
+        echo $this->Html->script('jquery.gotop.min.js');
+        echo $this->Html->script('custom.js');    
     ?>
 </html>

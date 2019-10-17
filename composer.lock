@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bdfe56ce06a95062ff683ed4dad28676",
+    "content-hash": "26b93b3f6253d9d67389299600951440",
     "packages": [
         {
             "name": "aura/intl",
@@ -288,6 +288,51 @@
             ],
             "description": "A composer installer for CakePHP 3.0+ plugins.",
             "time": "2017-12-24T21:09:29+00:00"
+        },
+        {
+            "name": "drmonkeyninja/cakephp-social-share",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/drmonkeyninja/cakephp-social-share.git",
+                "reference": "654f3caaf8c008cb7d566152d84f86214afc7977"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/drmonkeyninja/cakephp-social-share/zipball/654f3caaf8c008cb7d566152d84f86214afc7977",
+                "reference": "654f3caaf8c008cb7d566152d84f86214afc7977",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "~3.0"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "SocialShare\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Carter",
+                    "role": "Author"
+                },
+                {
+                    "name": "Mark Scherer",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "CakePHP helper for creating social share/bookmark links",
+            "homepage": "https://github.com/drmonkeyninja/cakephp-social-share",
+            "keywords": [
+                "cakephp",
+                "helper"
+            ],
+            "time": "2016-07-12T13:59:17+00:00"
         },
         {
             "name": "josegonzalez/dotenv",

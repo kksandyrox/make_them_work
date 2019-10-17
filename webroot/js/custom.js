@@ -1,5 +1,7 @@
 $(document).ready(function(e) {
-    $('.dropify').dropify();
+	if($("#upload-pothole-form").length) {
+    	$('.dropify').dropify();
+	}
 
     function createBackgroundColor() {
     	var bgColors = [];
@@ -87,10 +89,16 @@ $(document).ready(function(e) {
     	window.location.href = "/potholes/dashboard?filter=" + e.target.value;
     });
 
+    $("#public-constituency-filter").on('change', function(e) {
+    	window.location.href = "/potholes/publicDashboard?filter=" + e.target.value;
+    });
+
     $(".verify-now").click(function(e) {
     	var potholeId = $(this).data('pothole-id');
     	var userId = $(this).data('user-id');
     	$("#verify-modal").attr('action', '/potholes/verify-pothole/' + potholeId + '/' + userId);
     });
+
+    $('#goTop').goTop();
 
 });

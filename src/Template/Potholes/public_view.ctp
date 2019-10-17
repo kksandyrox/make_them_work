@@ -1,7 +1,6 @@
 <div class="mt-5 footer-adjustment">
     <div class="row">
-        <?php echo $this->element('sidebar/sticky-sidebar');?>
-        <div class="col-lg-8">
+        <div class="col-lg-8 offset-lg-3">
             <?php $images = json_decode($pothole['image']); ?>
             <?php 
                 if($pothole['severity'] == 1) {
@@ -21,9 +20,9 @@
                 <h4 class="card-title font-bold pb-2"><strong><?php echo $pothole['location'];?></strong></h4>
                 <div class="view overlay my-4">
                     <img src="http://mtw.sj/<?php echo $images->image_0;?>" class="img-fluid" alt="">
-                    <a href="#">
+<!--                     <a href="#">
                         <div class="mask rgba-white-slight"></div>
-                    </a>
+                    </a> -->
                 </div>
 
                 <h5 class="indigo-text font-bold mb-4">Constituency: <a href="#!" class="badge badge-primary"><?php echo $pothole['constituency']['name'];?></a></h5>
@@ -33,6 +32,9 @@
                 <a class="fa-lg p-2 m-2 li-ic"><i class="fa fa-linkedin grey-text"> </i></a>
                 <a class="fa-lg p-2 m-2 tw-ic"><i class="fa fa-twitter grey-text"> </i></a>
                 <a class="fa-lg p-2 m-2 fb-ic"><i class="fa fa-facebook grey-text"> </i></a>
+            <?php 
+
+            ?>
             </div>
             <hr />
             <p>More Images</p>
