@@ -172,11 +172,12 @@ class PotholesController extends AppController
 
     public function dashboard() {
         $this->viewBuilder()->setLayout('non_auth');
-        $conditions = array();
+        $conditions = array("is_admin_approved" => 1);
         $filter = '';
         if(!empty($this->request->getQuery('filter'))) {
             $filter = $this->request->getQuery('filter');
-            $conditions = array('constituency_id' => $filter);
+            $filterCondition = array('constituency_id' => $filter);
+            $conditions["constituency_id"] = $filter;
         }
         $constituencies = $this->Potholes->Constituencies->find('list', ['fields' => ['id', 'name']])->toArray();
         $this->paginate = [
