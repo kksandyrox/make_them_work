@@ -13,7 +13,6 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,14 +20,20 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <!-- <meta property="og:title" content="your_link_title"> -->
-    <!-- <meta property="og:image" content="http://mtw.sj/files/2/26/dota_2_queen_of_pain_akasha_succubus_101908_1920x1080.jpg"> -->
+    
+    <meta name="keywords" content="Potholes, Goa, MLAs, 40, constituency">
+    <meta name="description" content="Potholes in Goa. Make MLAs work">
+    <meta name="author" content="Make Them Work">
+
+    <meta property="og:title" content="<?php echo $title;?>">
+    <?php $imageMetaUrl = !empty($imageMetaUrl) ? $imageMetaUrl : "" ;?>
+    <meta property="og:image" content="<?php echo $imageMetaUrl;?>">
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+
     <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+        <?= $title ?>
     </title>
 
     <?= $this->Html->meta('icon') ?>

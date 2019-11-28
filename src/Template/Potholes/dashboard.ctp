@@ -169,7 +169,7 @@
                         <?php $primaryImage = json_decode($pothole['image'], TRUE)['image_0'];?>
                         <div class="col-sm-12 col-lg-9 mt-5">
                             <div class="card h-100">
-                                <img class="card-img-top" src="http://mtw.sj/<?php echo $primaryImage;?>" alt="Card image cap">
+                                <img class="card-img-top" src="<?php echo $primaryImage;?>" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $pothole['location'];?></h5>
                                     <div class="row">

@@ -113,6 +113,7 @@ class UsersController extends AppController
 
     public function register() {
         $this->viewBuilder()->setLayout('non_auth');
+        $this->set('title', 'Register');
         $users = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($users, $this->request->getData());
@@ -128,6 +129,7 @@ class UsersController extends AppController
 
     public function login() {        
         $this->viewBuilder()->setLayout('non_auth');
+        $this->set('title', 'Login');
         if ($this->request->is('post')) {
             $email = $this->request->getData('email');
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -164,6 +166,7 @@ class UsersController extends AppController
 
     public function forgotPassword() {
         $this->viewBuilder()->setLayout('non_auth');
+        $this->set('title', 'Forgot Password');
         if($this->request->is('post')) {
             $email = $this->request->getData('email');
             $users  = TableRegistry::get('Users');
@@ -190,6 +193,7 @@ class UsersController extends AppController
 
     public function resetPassword($userId = null, $resetToken = null) {
         $this->viewBuilder()->setLayout('non_auth');
+        $this->set('title', 'Reset Password');
         if(empty($userId) || empty($resetToken)) {
             $this->Flash->error(__('Your are not authorized to view this page'));
             $this->redirect(array('action' => 'login'));

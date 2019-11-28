@@ -32,7 +32,7 @@ class FeedbacksController extends AppController
 
 	public function feedback() {
         $this->viewBuilder()->setLayout('non_auth');
-
+        $this->set('title', 'Submit Feedback');
 		if($this->request->is('post')) {
 			$sentStatus = $this->sendFeedback($this->request->getData());
 			if($sentStatus) {

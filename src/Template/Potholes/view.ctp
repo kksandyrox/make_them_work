@@ -20,7 +20,7 @@
             <div class="jumbotron text-center">
                 <h4 class="card-title font-bold pb-2"><strong><?php echo $pothole['location'];?></strong></h4>
                 <div class="view overlay my-4">
-                    <img src="http://mtw.sj/<?php echo $images->image_0;?>" class="img-fluid" alt="">
+                    <img src="<?php echo $images->image_0;?>" class="img-fluid" alt="">
                     <a href="#">
                         <div class="mask rgba-white-slight"></div>
                     </a>
@@ -37,7 +37,7 @@
             <hr />
             <p>More Images</p>
             <?php foreach ($images as $key => $image):?>  
-                <a href="http://mtw.sj/<?php echo $image;?>" data-lightbox="roadtrip"><img src="http://mtw.sj/<?php echo $image;?>" alt="thumbnail" class="img-thumbnail" style="width: 200px">
+                <a href="<?php echo $image;?>" data-lightbox="roadtrip"><img src="<?php echo $image;?>" alt="thumbnail" class="img-thumbnail" style="width: 200px">
                 </a>
             <?php endforeach;?>
         </div>
