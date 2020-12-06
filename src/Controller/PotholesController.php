@@ -47,11 +47,15 @@ class PotholesController extends AppController
     {
         $this->viewBuilder()->setLayout('non_auth');
         $pothole = $this->Potholes->get($id, [
-            'contain' => ['Users', 'Constituencies']
+            'contain' => ['Users', 'Constituencies', 'PotholeVerifications']
         ]);
         $title = $pothole['location'] . " | " . $pothole['constituency']['name'];
+        $userProfileName = $this->Auth->user('first_name') . " " . $this->Auth->user('last_name');
+        $userId = $this->Auth->user('id');
+        $this->set('userProfileName', $userProfileName);
         $this->set('title', $title);
         $this->set('pothole', $pothole);
+        $this->set('userId', $userId);
     }
 
     public function publicView($id = null)
@@ -148,7 +152,8 @@ class PotholesController extends AppController
                 array_push($images, $this->request->getData('image_' . $i));
             }
             $this->processImagesAndSave($potholeId, $images);
-            $this->Flash->success(__('The pothole has been saved.'));
+        $users = $this->Potholes->Users->find('list', ['limit' => 200]);
+            $this->Flash->success(__('Thank you! We are processing your submission.'));
             return $this->redirect(['action' => 'dashboard', 'controller' => 'potholes']);
         }
         $this->Flash->error(__('The pothole could not be saved. Please, try again.'));
@@ -200,10 +205,11 @@ class PotholesController extends AppController
         ];
         $potholes = $this->paginate($this->Potholes)->toArray();
         $userId = $this->Auth->user('id');
+        $userProfileName = $this->Auth->user('first_name') . " " . $this->Auth->user('last_name');
         // $userSubmissions = $this->Potholes->find('all', ['conditions' => ['user_id' => $this->Auth->user('id')]])->count();
         $title = !empty($filteredConstituencyName) ? $filteredConstituencyName['name'] . " | " : '';
         $this->set('title', $title . "Potholes Dashboard");
-        $this->set(compact('constituencies', 'potholes', 'filter', 'userId'));
+        $this->set(compact('constituencies', 'potholes', 'filter', 'userId', 'userProfileName'));
     }
 
     public function publicDashboard() {
@@ -237,10 +243,10 @@ class PotholesController extends AppController
     public function statistics() {
         $this->viewBuilder()->setLayout('non_auth');
         $this->set('title', 'Statistics');
-        $potholeStatisticsQuery = "SELECT count(p.id) as p_count, p.id ,c.name FROM constituencies as c left join potholes as p on p.constituency_id = c.id group by c.id ORDER BY  c.id ASC ";
+        $potholeStatisticsQuery = "SELECT count(p.id) as p_count, p.id ,c.name FROM constituencies as c left join potholes as p on p.constituency_id = c.id group by c.id ORDER BY  p_count DESC ";
         $connection = ConnectionManager::get('default');
         $potholeStatistics = $connection->execute($potholeStatisticsQuery)->fetchAll('assoc');
-        $this->set(compact($potholeStatistics));
+        $this->set(compact('potholeStatistics'));
     }
 
     public function getConstituencyLabels() {

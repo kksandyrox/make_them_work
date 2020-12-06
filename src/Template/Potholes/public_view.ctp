@@ -32,9 +32,6 @@
                 <a class="fa-lg p-2 m-2 li-ic"><i class="fa fa-linkedin grey-text"> </i></a>
                 <a class="fa-lg p-2 m-2 tw-ic"><i class="fa fa-twitter grey-text"> </i></a>
                 <a class="fa-lg p-2 m-2 fb-ic"><i class="fa fa-facebook grey-text"> </i></a>
-            <?php 
-
-            ?>
             </div>
             <hr />
             <p>More Images</p>

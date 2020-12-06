@@ -180,7 +180,7 @@ class UsersController extends AppController
 
                 $user->token = $resetToken;
                 if($users->save($user)) {
-                    $this->sendForgotPasswordEmail($user['id'], $resetToken);
+                    $this->sendForgotPasswordEmail($user, $resetToken);
                     $this->Flash->success(__('Check your email to reset password'));
                     $this->redirect(array('action' => 'login'));
                 }
@@ -208,9 +208,9 @@ class UsersController extends AppController
         }
     }
 
-    public function sendForgotPasswordEmail($userId, $resetToken) {
-        // $this->id = $userId;
-        // $email = $this->field('email');
+    public function sendForgotPasswordEmail($user, $resetToken) {
+        $userId = $user['id'];
+        $userEmail = $user['email'];
         $passwordResetLink = Router::fullbaseUrl() . Router::url(array(
                 'controller' => 'users',
                 'action' => 'reset_password',
@@ -218,16 +218,30 @@ class UsersController extends AppController
                 $resetToken
             )
         );
+        $logoHost = Router::fullbaseUrl();
         // pr($passwordResetLink); die;
+        // $Email = new Email('default');
+        // $Email->setConfig(array('config' => 'smtp'));
+        // $Email->setFrom(array('admin@makethemwork.org' => 'Make them Work'))
+        //     ->setTo($userEmail)
+        //     ->setSubject('Forgot Password');
+        // if($Email->send($passwordResetLink)) {
+        //     return true;
+        // }
+        // return false;            
+        $userName = $user['first_name'];
         $Email = new Email('default');
         $Email->setConfig(array('config' => 'smtp'));
-        $Email->setFrom(array('kksandyrox@gmail.com' => 'Make them Work'))
-            ->setTo('kksandyrox@gmail.com')
-            ->setSubject('Forgot Password');
-        if($Email->send($passwordResetLink)) {
+        $Email->setFrom(array('admin@makethemwork.org' => 'Make them Work'))
+            ->setTo($userEmail)
+            ->setTemplate('fancy')
+            ->setSubject('Forgot Password')
+            ->setEmailFormat('html')
+            ->setViewVars(array($userName, $passwordResetLink, $logoHost));
+        if($Email->send()) {
             return true;
         }
-        return false;            
+        return false;             
     }
 
     private function passwordHandler($userId) {

@@ -2,6 +2,14 @@
     <div class="row">
         <?php echo $this->element('sidebar/sticky-sidebar');?>
         <div class="col-lg-8">
+            <!-- Collapse buttons -->
+            <div>
+              <a class="btn btn-mdb-color  d-block d-sm-none mobile-add-pothole waves-light" data-toggle="collapse" href="#collapsibleForm" aria-expanded="false" aria-controls="collapseExample">
+                Submit New Pothole
+              </a>
+            </div>
+            <!-- / Collapse buttons -->
+            <div class='collapse dont-collapse-xs' id="collapsibleForm">
             <?php echo $this->Form->create(false, ['url' => ['action' => 'upload_pothole', 'controller' => 'potholes'], 'type' => 'file', 'id' => 'upload-pothole-form']) ;?>
             <div class="row">
                 <div class="col-lg-6">
@@ -58,7 +66,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="severity" id="severity-low" value="1">
                                     <strong>
-                                        <label class="form-check-label" for="severity-low" style="color: green;">
+                                        <label class="form-check-label text-default" for="severity-low">
                                             Low
                                         </label>
                                     </strong>
@@ -66,7 +74,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="severity" id="severity-moderate" value="2" checked>
                                     <strong>
-                                    <label class="form-check-label" for="severity-moderate" style="color: orange;">
+                                    <label class="form-check-label text-warning" for="severity-moderate">
                                             Moderate
                                         </label>
                                     </strong>
@@ -74,7 +82,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="severity" id="severity-high" value="3">
                                     <strong>
-                                        <label class="form-check-label" for="severity-high" style="color: red;">
+                                        <label class="form-check-label text-danger" for="severity-high">
                                             High
                                         </label>
                                     </strong>
@@ -129,6 +137,7 @@
                 </div>
             </div>
             <?php echo $this->Form->end();?>
+        </div>
             <hr class="my-2">
             <h3>Recent news...</h3>
             <div class="row">
@@ -148,7 +157,6 @@
                     ?>            
                 </div>
             </div>
-            <!-- <?php pr($potholes);?> -->
             <?php if(!empty($potholes)): ?>
                 <div class="row">
                     <?php foreach($potholes as $pothole): ?>
@@ -174,13 +182,23 @@
                                     <h5 class="card-title"><?php echo $pothole['location'];?></h5>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <p class="mb-0">Constituency: <a href="#!" class="badge badge-primary"><?php echo $pothole['constituency']['name'];?></a></p>
-                                            <p>Severity: <span class="badge badge-pill <?php echo $severityClass;?>"><?php echo $severityVerb;?></span></p>
+                                            <h5>
+                                                <span href="#!" class="badge badge-default" title="Constituency">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                    <?php echo $pothole['constituency']['name'];?>
+                                                </span>
+                                                <span class="badge <?php echo $severityClass;?>" title="Severity">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                                    <?php echo $severityVerb;?>
+                                                </span>
+                                                <span class="badge badge-default" title="Total Verifications">
+                                                    <i class="fa fa-flash"></i>
+                                                    <?php echo count($pothole['pothole_verifications']);?>
+                                                </span>
+                                            </h5>
                                         </div>
                                         <div class="col-lg-6">
-                                            <p class="card-title">Total Verifications: 
-                                                <span class="badge badge-default"><?php echo count($pothole['pothole_verifications']);?></span>
-                                            </p>
+                                            
                                             <?php
                                                 $currentUserVerified = false; 
                                                 foreach($pothole['pothole_verifications'] as $pothole_verification) {
@@ -189,14 +207,24 @@
                                                     }
                                                 }
                                             ;?>
-                                            <?php if($currentUserVerified): ?>
-                                                <span>Verified!</span>
-                                            <?php else:?>
-                                                <a class="verify-now" id="" data-toggle="modal" data-target="#basicExampleModal" data-pothole-id="<?php echo $pothole['id'];?>" data-user-id="<?php echo $userId;?>">Verify Now: <i class="fa fa-flash fa-lg red-text"></i></a>
+                                            <?php if(!$currentUserVerified): ?>
+                                                <p>
+                                                <a class="verify-now" id="" data-toggle="modal" data-target="#basicExampleModal" data-pothole-id="<?php echo $pothole['id'];?>" data-user-id="<?php echo $userId;?>">Verify Now: <i class="fa fa-flash fa-lg red-text" title="Verify Now"></i></a>
+                                                </p>
                                             <?php endif;?>
-
+                                        
+                                            <p>
+                                                Share on Facebook:
+                                                <?php 
+                                                        echo $this->SocialShare->fa(
+                                                            'facebook',
+                                                             '/potholes/publicView/'. $pothole['id']
+                                                        );
+                                                    ?>
+                                            </p>
                                         </div>
                                     </div>
+                                            <hr></hr>
                                     <div class="row text-left">
                                         <div class="col-lg-12">
                                             <p class="card-text"><?php echo $pothole['description'];?></p>
@@ -267,11 +295,16 @@
 </div>
 
 
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&key=AIzaSyAoB4srvQLED31oxlKzgLnKcbilJWws-38"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&key=AIzaSyBjooSrTIcQeXzewkZ5OJw2TrKDlaZSBrs"></script>
         <script>
             function init() {
                 var input = document.getElementById('location');
                 var autocomplete = new google.maps.places.Autocomplete(input);
+                // 'place' object stores Lat and Long for future use.
+                // google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                //     var place = autocomplete.getPlace();
+                //     console.log(place)
+                // });
             }
  
             google.maps.event.addDomListener(window, 'load', init);

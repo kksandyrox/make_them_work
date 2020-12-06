@@ -1,7 +1,23 @@
+@media (min-width: 576px) {
+    .collapse.dont-collapse-xs {
+        display: block;
+        height: auto !important;
+        visibility: visible;
+    }
+}
+
 .footer-adjustment {
     margin-bottom: 100px;
 }
 
 #goTopSpan {
 	color: #212529;
+}
+
+.flash-message-adjustment {
+	text-align: center;
+}
+
+.mobile-add-pothole {
+	margin-bottom: 30px;
 }
