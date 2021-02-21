@@ -49,7 +49,7 @@ class FeedbacksController extends AppController
 		// pr($feedbackData);
 		$Email = new Email('default');
 		$Email->setConfig(array('config' => 'smtp'));
-		$Email->setFrom(array($feedbackData['email'] => 'Make them Work'))
+		$Email->setFrom(array($feedbackData['email'] => $feedbackData['email']))
 		    ->setTo('admin@makethemwork.org')
 		    ->setSubject('Feedback');
 		    // ->emailFormat('html')
