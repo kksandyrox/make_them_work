@@ -19,20 +19,25 @@
             <div class="jumbotron text-center">
                 <?php if($pothole['is_admin_approved'] == 1):?>
                     <?php 
-                        echo $this->Form->create($pothole, ['url' => ['controller' => 'potholes', 'action' => 'edit', $pothole["id"], 0]]);
+                        echo $this->Form->create($pothole, ['url' => ['controller' => 'potholes', 'action' => 'edit', $pothole["id"]]]);
+
+                        echo $this->Form->hidden('is_admin_approved', array('value' => 0));
+
                         echo $this->Form->button(__('UNAPPROVE'), array('class' => 'btn btn-danger'));
                         echo $this->Form->end(); 
                     ?>
                 <?php else:?>
                     <?php 
-                        echo $this->Form->create($pothole, ['url' => ['controller' => 'potholes', 'action' => 'edit', $pothole["id"], 1]]);
+                        echo $this->Form->create($pothole, ['url' => ['controller' => 'potholes', 'action' => 'edit', $pothole["id"]]]);
+                        echo $this->Form->hidden('is_admin_approved', array('value' => 1));
+
                         echo $this->Form->button(__('APPROVE'), array('class' => 'btn btn-success'));
                         echo $this->Form->end(); 
                     ?>
                 <?php endif;?>
                 <h4 class="card-title font-bold pb-2"><strong><?php echo $pothole['location'];?></strong></h4>
                 <div class="view overlay my-4">
-                    <img src="http://mtw.sj/<?php echo $images->image_0;?>" class="img-fluid" alt="">
+                    <img src="<?php echo $hostUrl . $images->image_0;?>" class="img-fluid" alt="">
                 </div>
 
                 <h5 class="indigo-text font-bold mb-4">Constituency: <a href="#!" class="badge badge-primary"><?php echo $pothole["constituency"]['name'];?></a></h5>
@@ -46,7 +51,7 @@
             <hr />
             <p>More Images</p>
             <?php foreach ($images as $key => $image):?>  
-                <a href="http://mtw.sj/<?php echo $image;?>" data-lightbox="roadtrip"><img src="http://mtw.sj/<?php echo $image;?>" alt="thumbnail" class="img-thumbnail" style="width: 200px">
+                <a href="<?php echo $hostUrl . $image;?>" data-lightbox="roadtrip"><img src="<?php echo $hostUrl . $image;?>" alt="thumbnail" class="img-thumbnail" style="width: 200px">
                 </a>
             <?php endforeach;?>
         </div>

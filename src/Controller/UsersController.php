@@ -130,6 +130,9 @@ class UsersController extends AppController
     public function login() {        
         $this->viewBuilder()->setLayout('non_auth');
         $this->set('title', 'Login');
+        if(!empty($this->Auth->user())) {
+            return $this->redirect($this->Auth->redirectUrl());
+        }
         if ($this->request->is('post')) {
             $email = $this->request->getData('email');
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {

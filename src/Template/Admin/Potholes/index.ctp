@@ -5,10 +5,10 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email', 'Email') ?></th>
-                <th scope="col">User Full Name</th>
                 <!-- <th scope="col"><?= $this->Paginator->sort('image') ?></th> -->
                 <!-- <th scope="col"><?= $this->Paginator->sort('path') ?></th> -->
                 <th scope="col"><?= $this->Paginator->sort('location', 'Google Map Location') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('is_admin_approved', 'Is Approved') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('address', 'Landmark') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('severity') ?></th>
                 <!-- <th scope="col"><?= $this->Paginator->sort('comments') ?></th> -->
@@ -18,15 +18,15 @@
             </tr>
         </thead>
         <tbody>
-        <?php pr($potholes);?>
+        <!-- <?php pr($potholes);?> -->
             <?php foreach ($potholes as $pothole): ?>
             <tr>
                 <td><?= $this->Number->format($pothole->id) ?></td>
                 <td><?= h($pothole->user->email) ?></td>
-                <td><?= h($pothole->user->first_name) . ' ' . h($pothole->user->last_name) ?></td>
                 <!-- <td><?= h($pothole->image) ?></td> -->
                 <!-- <td><?= h($pothole->path) ?></td> -->
                 <td><?= h($pothole->location) ?></td>
+                <td><?= h($pothole->is_admin_approved) ?></td>
                 <td><?= h($pothole->address) ?></td>
                 <td><?= h($pothole->severity) ?></td>
                 <!-- <td><?= h($pothole->comments) ?></td> -->

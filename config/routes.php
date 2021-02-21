@@ -82,5 +82,6 @@ Router::scope('/', function (RouteBuilder $routes) {
 Router::prefix('admin', function ($routes) {
     // All routes here will be prefixed with `/admin`
     // And have the prefix => admin route element added.
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->fallbacks(DashedRoute::class);
 });

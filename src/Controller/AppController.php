@@ -74,6 +74,7 @@ class AppController extends Controller
                     'controller' => 'users',
                     'action' => 'login'
                 ],
+                'authorize' => 'Controller'
             ]
         );
 
@@ -83,6 +84,23 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
     }
+
+    public function isAuthorized() {
+        // Any registered user can access public functions
+        if(empty($this->request->params['prefix'])) {
+            return true;
+        }
+        // Only admins can access admin functions
+        if(isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin') {
+            if(!$this->Auth->user('is_admin')) {
+                $this->Flash->error('You are not authorized to access this location');
+                return $this->redirect(array('controller' => 'potholes', 'action' => 'dashboard', 'prefix' => false));
+            }
+            return $this->Auth->user('is_admin');
+        }
+        return false;
+    }
+
 
     public function beforeFilter(Event $event) {
         $this->Auth->allow(['register', 'statistics', 'getConstituencyLabels', 'getValues', 'feedback', 'forgotPassword', 'resetPassword']);
