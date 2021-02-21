@@ -7,7 +7,8 @@ $this->layout = 'error';
 if (Configure::read('debug')) :
     $this->layout = 'dev_error';
 
-    $this->assign('title', $message);
+    // $this->assign('title', $message);
+    $this->assign('title', "Page Not Found");
     $this->assign('templateName', 'error400.ctp');
 
     $this->start('file');
@@ -31,7 +32,7 @@ endif;
 $this->end();
 endif;
 ?>
-<h2><?= h($message) ?></h2>
+<h2><?= h("Page Not Found") ?></h2>
 <p class="error">
     <strong><?= __d('cake', 'Error') ?>: </strong>
     <?= __d('cake', 'The requested address {0} was not found on this server.', "<strong>'{$url}'</strong>") ?>

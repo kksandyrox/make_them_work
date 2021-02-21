@@ -21,6 +21,9 @@
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
+    <?= $this->Html->css('bootstrap.min.css') ?>
+
+    <?= $this->Html->css('mdb.min.css') ?>
 
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('style.css') ?>
@@ -30,7 +33,8 @@
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <div id="container">
+    
+    <div class="container">
         <div id="header">
             <h1><?= __('Error') ?></h1>
         </div>
