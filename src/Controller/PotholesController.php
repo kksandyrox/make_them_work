@@ -185,7 +185,7 @@ class PotholesController extends AppController
         $filter = '';
         if(!empty($this->request->getQuery('filter'))) {
             $filter = $this->request->getQuery('filter');
-            $filterCondition = array('constituency_id' => $filter);
+            // $filterCondition = array('constituency_id' => $filter);
             $conditions["constituency_id"] = $filter;
             $filteredConstituencyName = $this->Potholes->Constituencies->get($filter);
         }
@@ -214,12 +214,13 @@ class PotholesController extends AppController
 
     public function publicDashboard() {
         $this->viewBuilder()->setLayout('non_auth');
+        $conditions = array("is_admin_approved" => 1);
         $this->set('title', 'Public Dashboard');
-        $conditions = array();
         $filter = '';
         if(!empty($this->request->getQuery('filter'))) {
             $filter = $this->request->getQuery('filter');
-            $conditions = array('constituency_id' => $filter);
+            // $conditions = array('constituency_id' => $filter);
+            $conditions["constituency_id"] = $filter;
         }
         $constituencies = $this->Potholes->Constituencies->find('list', ['fields' => ['id', 'name']])->toArray();
         $this->paginate = [
