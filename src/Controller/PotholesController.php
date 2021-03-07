@@ -52,6 +52,8 @@ class PotholesController extends AppController
         $title = $pothole['location'] . " | " . $pothole['constituency']['name'];
         $userProfileName = $this->Auth->user('first_name') . " " . $this->Auth->user('last_name');
         $userId = $this->Auth->user('id');
+        $imageMetaUrl = json_decode($pothole['image'])->image_0;
+        $this->set('imageMetaUrl', $imageMetaUrl);
         $this->set('userProfileName', $userProfileName);
         $this->set('title', $title);
         $this->set('pothole', $pothole);
@@ -62,13 +64,15 @@ class PotholesController extends AppController
     {
         $this->viewBuilder()->setLayout('non_auth');
         $pothole = $this->Potholes->get($id, [
-            'contain' => ['Users', 'Constituencies']
+            'contain' => ['Users', 'Constituencies', 'PotholeVerifications']
         ]);
         $title = $pothole['location'] . " | " . $pothole['constituency']['name'];
         $imageMetaUrl = json_decode($pothole['image'])->image_0;
+        $userId = $this->Auth->user('id');
         $this->set('imageMetaUrl', $imageMetaUrl);
         $this->set('title', $title);
         $this->set('pothole', $pothole);
+        $this->set('userId', $userId);
     }
 
     /**
@@ -283,7 +287,7 @@ class PotholesController extends AppController
         if ($this->request->is('post')) {
             if ($this->Potholes->PotholeVerifications->save($pothole)) {
                 $this->Flash->success(__('You have verified this pothole.'));
-                return $this->redirect(['action' => 'dashboard']);
+                return $this->redirect($this->referer());
             }
             $this->Flash->error(__('The pothole could not be saved. Please, try again.'));
         }

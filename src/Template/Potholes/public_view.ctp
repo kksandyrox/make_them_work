@@ -20,18 +20,53 @@
                 <h4 class="card-title font-bold pb-2"><strong><?php echo $pothole['location'];?></strong></h4>
                 <div class="view overlay my-4">
                     <img src="<?php echo $images->image_0;?>" class="img-fluid" alt="">
-<!--                     <a href="#">
-                        <div class="mask rgba-white-slight"></div>
-                    </a> -->
+
                 </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h5>
+                            <span href="#!" class="badge badge-default" title="Constituency">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <?php echo $pothole['constituency']['name'];?>
+                            </span>
+                            <span class="badge <?php echo $severityClass;?>" title="Severity">
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                <?php echo $severityVerb;?>
+                            </span>
+                            <span class="badge badge-default" title="Total Verifications">
+                                <i class="fa fa-flash"></i>
+                                <?php echo count($pothole['pothole_verifications']);?>
+                            </span>
+                        </h5>
+                    </div>
+                    <div class="col-lg-6">
+                        <?php 
+                            $currentUserVerified = false; 
+                            foreach($pothole['pothole_verifications'] as $pothole_verification) {
+                                if($userId == $pothole_verification['user_id']) {
+                                    $currentUserVerified = true;
+                                }
+                            }
+                        ;?>
+                        <?php if(!$currentUserVerified): ?>
+                            <p>
+                            <a class="verify-now" id="" data-toggle="modal" data-target="#basicExampleModal" data-pothole-id="<?php echo $pothole['id'];?>" data-user-id="<?php echo $userId;?>">Verify Now: <i class="fa fa-flash fa-lg red-text" title="Verify Now"></i></a>
+                            </p>
+                        <?php endif;?>
+                    
+                        <p>
+                            Share on Facebook:
+                            <?php 
+                                    echo $this->SocialShare->fa(
+                                        'facebook',
+                                         '/potholes/publicView/'. $pothole['id']
+                                    );
+                                ?>
+                        </p>
 
-                <h5 class="indigo-text font-bold mb-4">Constituency: <a href="#!" class="badge badge-primary"><?php echo $pothole['constituency']['name'];?></a></h5>
-                <h5 class="indigo-text font-bold mb-4">Severity: <span class="badge badge-pill <?php echo $severityClass;?>"><?php echo $severityVerb;?></span></h5>
-
-                <p class="card-text"><?php echo $pothole['description'];?></p>
-                <a class="fa-lg p-2 m-2 li-ic"><i class="fa fa-linkedin grey-text"> </i></a>
-                <a class="fa-lg p-2 m-2 tw-ic"><i class="fa fa-twitter grey-text"> </i></a>
-                <a class="fa-lg p-2 m-2 fb-ic"><i class="fa fa-facebook grey-text"> </i></a>
+                    </div>    
+                </div>
+                <p class="card-text">Description: <?php echo $pothole['description'];?></p>
             </div>
             <hr />
             <p>More Images</p>
@@ -41,4 +76,25 @@
             <?php endforeach;?>
         </div>
     </div>
+</div>
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Please Login to continue</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Only Registered and logged in members can Verify a Pothole.
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+            <div class="col-lg-6"><a href="/users/login">Login</a></div>
+            <div class="col-lg-6"><a href="/users/register">Register</a></div>
+        </div>
+      </div>
+    </div>  
+  </div>
 </div>
