@@ -25,16 +25,16 @@ class PotholesController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Users'],
-            'limit' => 1
-        ];
-        $potholes = $this->paginate($this->Potholes);
+    // public function index()
+    // {
+    //     $this->paginate = [
+    //         'contain' => ['Users'],
+    //         'limit' => 1
+    //     ];
+    //     $potholes = $this->paginate($this->Potholes);
 
-        $this->set(compact('potholes'));
-    }
+    //     $this->set(compact('potholes'));
+    // }
 
     /**
      * View method
@@ -80,21 +80,21 @@ class PotholesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-        $pothole = $this->Potholes->newEntity();
-        if ($this->request->is('post')) {
-            $pothole = $this->Potholes->patchEntity($pothole, $this->request->getData());
-            if ($this->Potholes->save($pothole)) {
-                $this->Flash->success(__('The pothole has been saved.'));
+    // public function add()
+    // {
+    //     $pothole = $this->Potholes->newEntity();
+    //     if ($this->request->is('post')) {
+    //         $pothole = $this->Potholes->patchEntity($pothole, $this->request->getData());
+    //         if ($this->Potholes->save($pothole)) {
+    //             $this->Flash->success(__('The pothole has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The pothole could not be saved. Please, try again.'));
-        }
-        $users = $this->Potholes->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pothole', 'users'));
-    }
+    //             return $this->redirect(['action' => 'index']);
+    //         }
+    //         $this->Flash->error(__('The pothole could not be saved. Please, try again.'));
+    //     }
+    //     $users = $this->Potholes->Users->find('list', ['limit' => 200]);
+    //     $this->set(compact('pothole', 'users'));
+    // }
 
     /**
      * Edit method
@@ -103,23 +103,23 @@ class PotholesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $pothole = $this->Potholes->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $pothole = $this->Potholes->patchEntity($pothole, $this->request->getData());
-            if ($this->Potholes->save($pothole)) {
-                $this->Flash->success(__('The pothole has been saved.'));
+    // public function edit($id = null)
+    // {
+    //     $pothole = $this->Potholes->get($id, [
+    //         'contain' => []
+    //     ]);
+    //     if ($this->request->is(['patch', 'post', 'put'])) {
+    //         $pothole = $this->Potholes->patchEntity($pothole, $this->request->getData());
+    //         if ($this->Potholes->save($pothole)) {
+    //             $this->Flash->success(__('The pothole has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The pothole could not be saved. Please, try again.'));
-        }
-        $users = $this->Potholes->Users->find('list', ['limit' => 200]);
-        $this->set(compact('pothole', 'users'));
-    }
+    //             return $this->redirect(['action' => 'index']);
+    //         }
+    //         $this->Flash->error(__('The pothole could not be saved. Please, try again.'));
+    //     }
+    //     $users = $this->Potholes->Users->find('list', ['limit' => 200]);
+    //     $this->set(compact('pothole', 'users'));
+    // }
 
     /**
      * Delete method
@@ -128,18 +128,18 @@ class PotholesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $pothole = $this->Potholes->get($id);
-        if ($this->Potholes->delete($pothole)) {
-            $this->Flash->success(__('The pothole has been deleted.'));
-        } else {
-            $this->Flash->error(__('The pothole could not be deleted. Please, try again.'));
-        }
+    // public function delete($id = null)
+    // {
+    //     $this->request->allowMethod(['post', 'delete']);
+    //     $pothole = $this->Potholes->get($id);
+    //     if ($this->Potholes->delete($pothole)) {
+    //         $this->Flash->success(__('The pothole has been deleted.'));
+    //     } else {
+    //         $this->Flash->error(__('The pothole could not be deleted. Please, try again.'));
+    //     }
 
-        return $this->redirect(['action' => 'index']);
-    }
+    //     return $this->redirect(['action' => 'index']);
+    // }
 
     public function uploadPothole() {
         $pothole = $this->Potholes->newEntity();

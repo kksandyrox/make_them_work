@@ -54,6 +54,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->connect('login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('/', ['controller' => 'potholes', 'action' => 'publicDashboard']);
+    $routes->connect('potholes/', ['controller' => 'potholes', 'action' => 'publicDashboard']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
